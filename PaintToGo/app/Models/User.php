@@ -1,46 +1,70 @@
 <?php
 
+/**
+ * Created by Reliese Model.
+ */
+
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Model;
 
-class User extends Authenticatable
+/**
+ * Class User
+ * 
+ * @property int $user_id
+ * @property string $firstName
+ * @property string $lastName
+ * @property string $user_contact
+ * @property string $email_add
+ * @property string $password
+ * @property string $level_name
+ * @property Carbon $created_at
+ * @property Carbon $updated_at
+ * 
+ * @property Collection|Branch[] $branches
+ * @property Collection|Consultation[] $consultations
+ * @property Collection|Order[] $orders
+ * @property Collection|Request[] $requests
+ *
+ * @package App\Models
+ */
+class User extends Model
 {
-    use HasFactory, Notifiable;
+	protected $table = 'users';
+	protected $primaryKey = 'user_id';
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = [
-        'firstName',
-        'lastName',
-        'user_contact',
-        'email_add',
-        'password',
-        'level_name'
-    ];
+	protected $hidden = [
+		'password'
+	];
 
-    /**
-     * The attributes that should be hidden for arrays.
-     *
-     * @var array
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
+	protected $fillable = [
+		'firstName',
+		'lastName',
+		'user_contact',
+		'email_add',
+		'password',
+		'level_name'
+	];
 
-    /**
-     * The attributes that should be cast to native types.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'created_at' => 'datetime',
-    ];
+	public function branches()
+	{
+		return $this->hasMany(Branch::class);
+	}
+
+	public function consultations()
+	{
+		return $this->hasMany(Consultation::class);
+	}
+
+	public function orders()
+	{
+		return $this->hasMany(Order::class);
+	}
+
+	public function requests()
+	{
+		return $this->hasMany(Request::class);
+	}
 }

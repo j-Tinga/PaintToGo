@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\TransactionListController;
+use App\Http\Controllers\ProductController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -26,6 +27,7 @@ Route::get('/nRList', [TransactionListController::class, 'nullR']);
 Route::get('/nOList', [TransactionListController::class, 'nullO']);  
 Route::get('/nCList', [TransactionListController::class, 'nullC']);  
 
+Route::get('/products', [ProductController::class, 'index']);  
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
